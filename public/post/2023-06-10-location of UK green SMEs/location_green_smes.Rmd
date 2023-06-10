@@ -22,7 +22,7 @@ library(RColorBrewer)
 
 ## Load the data:
 
-```{r}
+```{r cars}
 df1<- read.csv("postcodes_lsbs_greenmission_2021.csv", sep=",", header=T)
 ```
 
@@ -37,54 +37,41 @@ The data contains the coordinates of each SME postcode and each SME classificati
 We consider SMEs that answer 1) or 2) in the survey as "green mission" SMEs. Those that answer 3) or 4) are "minor green mission". Those that answer 5 are not considered green SMEs.
 
 
-## Plot 1: Major green SMEs
+## Plot 1: green mission SMEs
 
-```{r }
+```{r}
 legend_title <- "Environmental goals" #rename the legend title.
 UK <- map_data(map = "world", region = "UK") # load "world" map, and then UK
 ggplot(data = UK, aes(x = long, y = lat, group = group)) + 
-  geom_polygon(fill = 'gray95', color = 'black') + theme_void() + #format empty 
-                                                                   #UK map
+  geom_polygon(fill = 'gray95', color = 'black') + theme_void() + #just formatting the empty UK map
   coord_map()+geom_point(data = df1,                
-                         aes(x = as.numeric(longitude_o), #coordinates of SMEs  
-                             y = as.numeric(latitude_o), group = D3_2021,
-                             colour=factor(D3_2021)),alpha = .7) + 
+                         aes(x = as.numeric(longitude_o), #the coordinates of SMEs  
+                             y = as.numeric(latitude_o), group = D3_2021,colour=factor(D3_2021)),alpha = .7) + 
   scale_size_area(max_size = 5) + 
-  scale_colour_manual(legend_title,labels = c("Business's only concern",
-                                              "Business's primary concern"),
-                      values = c("purple4", "darkorange2"))+
+  scale_colour_manual(legend_title,labels = c("Business's only concern", "Business's primary concern"), values = c("purple4", "darkorange2"))+
   theme(title = element_text(size = 10),legend.position="left")
 
 ```
 
-Clearly, the vast majority of green SMEs with exclusive environmental objectives are located in England, and in the South East in particular. There is a noticeably high density of SMEs with primary green concerns in Northern Ireland, and the North West of England. The nation with the lowest density of green mission SMEs is Scotland, followed by Wales (northern and central regions). Most of the major green mission SMEs in Scotland are located in the axis Glasgow-Edinburgh. 
-
-## load data for minor green SMEs
-```{r}
-df1<- read.csv("postcodes_lsbs_greenlaggards_2021.csv", sep=",", header=T)
-
-```
+Clearly, the vast majority of both types are located in England, and in the South East in particular. There is a noticeably high density of SMEs with primary green concerns in Northern Ireland, and the North West of England. The nation with the lowest density of green mission SMEs is Scotland, followed by Wales (northern and central regions). Most of the major green mission SMEs in Scotland are located in the axis Glasgow-Edinburgh. 
 
 ## Plot 2: minor green mission/no green mission 
 
-
 ```{r}
+df1<- read.csv("postcodes_lsbs_greenlaggards_2021.csv", sep=",", header=T)
 legend_title <- "Environmental goals"
-UK <- map_data(map = "world", region = "UK") #load UK map from maps library
+
+UK <- map_data(map = "world", region = "UK") # load the UK map from the maps library
 ggplot(data = UK, aes(x = long, y = lat, group = group)) + 
-  geom_polygon(fill = 'gray95', color = 'black') + theme_void()+  
+  geom_polygon(fill = 'gray95', color = 'black') + theme_void() + #format empty UK map 
   coord_map()+geom_point(data = df1, 
                          aes(x = as.numeric(longitude_o), 
-                             y = as.numeric(latitude_o),
-                             group = D3_2021,
-                             colour=factor(D3_2021)),alpha = .7) + 
+                             y = as.numeric(latitude_o), group = D3_2021,colour=factor(D3_2021)),alpha = .7) + 
   scale_size_area(max_size = 5) + 
   # scale_color_viridis_c() + 
-  scale_colour_manual(legend_title,labels = c("Equal to financial goals", 
-                                              "Secondary to financial goals", 
-                                              "Non-existent"), 
-                      values = c("red4", "forestgreen", "blue"))+
+  scale_colour_manual(legend_title,labels = c("Equal to financial goals", "Secondary to financial goals", "Non-existent"), values = c("red4", "forestgreen", "blue"))+
   theme(title = element_text(size = 10),legend.position="left")
 ```
+
 
 The density of SMEs with some kind of green objective (``minor green mission'') is also highest in England. Northern Ireland also holds a large number of SMEs with secondary green objectives.  The number of SMEs without any green concern is relatively low, and the vast majority are located in South East England.
