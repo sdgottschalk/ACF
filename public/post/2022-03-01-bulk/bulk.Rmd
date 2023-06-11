@@ -1,0 +1,82 @@
+---
+title: "Download bulk data"
+author: "Sylvia Gottschalk"
+date: "2022-03-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Aim: Dowload crypto data from Yahoo Finance
+
+You can download historical financial data from Yahoo Finance directly into 
+R and process the data without having to use Excel as an intermediate step. 
+When you download data from Yahoo Finance, you get 1 data set in 1 csv file. 
+If you need data for multiple time series -multiple stock returns for portfolio
+optimization for example- using the package yfR will automate the download and 
+format the data for further use. In this post we are going to download data for 4 cryptos and then plot the cumulative returns of each crypto. First, install the package yfR developed by Marcelo Perlin.
+
+#### Upload the libraries
+
+```{r  message=FALSE}
+library(ggplot2)  
+library(RColorBrewer) 
+library(yfR)
+library(xts)
+
+```
+
+#### Download the prices of 4 cryptos
+
+```{r  message=FALSE}
+# set tickers
+tickers<-c('BTC-GBP','ETH-GBP','XRP-GBP')
+
+# set dates
+first_date <- Sys.Date()-3*365  #Sys.Date()=today on your computer
+last_date <- Sys.Date()
+thresh_bad_data <- 0.95   # sets percent threshold for bad data
+bench_ticker <- '^GSPC'   # set benchmark as S&P500
+#cache_folder <- 'data/BGS_Cache' # set folder for cache: change name or ignore
+
+# fetch data: output is a panel with vars stacked up by ticker.
+l_out<- yf_get(tickers = tickers, 
+                first_date = first_date,
+                last_date = last_date)
+                #bench.ticker = bench_ticker,
+                #thresh.bad.data = thresh_bad_data)
+```
+
+#### Reformat the data
+
+```{r}
+l_wide <- yf_convert_to_wide(l_out)  #convert dataset to have vars in separate columns
+
+returns <-l_wide[[7]] #select only the returns
+returns<- xts(returns[,-1], order.by=as.POSIXct(returns$ref_date))# ,format='%m/%d/%Y'))
+returns<-returns[complete.cases(returns), ]
+
+```
+
+#### Plots the cumulative returns
+
+```{r}
+p.cumulreturn <- ggplot(l_out, aes(x = ref_date, 
+                                         y = cumret_adjusted_prices)) + 
+  geom_line(aes(color=ticker))+
+  labs(x = '', 
+       y = 'Returns in percent',
+       title = 'Cumulative returns of three cryptos',
+       caption = 'Data from Yahoo Finance') 
+       
+
+p.cumulreturn
+```
+
+Cumulatively, Ethereum has a higher return than bitcoin. To adapt this code for stocks, all you have to do is check the tickers of the stocks you want to download on Yahoo Finance and replace these tickers in the first line of code above.  
+
+#### References
+
+Perlin M (2023). yfR: Downloads and Organizes Financial Data from Yahoo Finance. R package version 1.1.0, https://github.com/ropensci/yfR. 
