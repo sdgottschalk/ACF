@@ -16,6 +16,7 @@ The latest wave of the survey of SMEs by the UK Department for Business Energy a
 ```{r}
 library(ggplot2)
 library(maps)
+library(mapproj)
 library(dplyr)
 library(RColorBrewer)
 ```
