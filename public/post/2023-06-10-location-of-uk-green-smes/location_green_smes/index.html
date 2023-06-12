@@ -6,7 +6,7 @@
 <meta name="generator" content="Hugo 0.113.0">
 
 
-<title>Location of UK green SMEs - My New Hugo Site</title>
+<title>Location of UK green SMEs - ACQF</title>
 <meta property="og:title" content="Location of UK green SMEs - My New Hugo Site">
 
 
@@ -63,7 +63,9 @@
 
     <div class="article-content">
       <h2 id="beis-logitudinal-small-business-survey-2021">BEIS Logitudinal Small Business Survey 2021</h2>
-<p>The latest wave of the survey of SMEs by the UK Department for Business Energy and Industrial Strategy has 3 years of data on green small businesses. The data show the location of green SMEs in all the nations of the UK and by postcode. The code to obtain a map of these locations is generated using the maps and ggplot libraries. RColorBrewer adds cool palettes:</p>
+<p>The latest wave of the survey of SMEs by the UK Department for Business Energy and Industrial Strategy has 3 years of data on green small businesses. 
+ The data show the location of green SMEs in all the nations of the UK and by postcode. 
+  The code to obtain a map of these locations is generated using the maps and ggplot libraries. RColorBrewer adds cool palettes:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(ggplot2)
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(maps)
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(mapproj)
@@ -79,7 +81,7 @@
 </code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(RColorBrewer)
 </span></span></code></pre></div><h2 id="load-the-data">Load the data:</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>df1<span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">read.csv</span>(<span style="color:#e6db74">&#34;postcodes_lsbs_greenmission_2021.csv&#34;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;,&#34;</span>, header<span style="color:#f92672">=</span>T)
-</span></span></code></pre></div><p>The data contains the coordinates of each SME postcode and each SME classification of its green aims:</p>
+</span></span></code></pre></div><p>The data contains the geographic coordinates of each SME's postcode and each SME's classification of its green aims:</p>
 <ol>
 <li>Business&rsquo;s main goal</li>
 <li>Business&rsquo;s primary concern</li>
@@ -87,7 +89,7 @@
 <li>Secondary to financial goals</li>
 <li>Non-existent</li>
 </ol>
-<p>We consider SMEs that answer 1) or 2) in the survey as &ldquo;green mission&rdquo; SMEs. Those that answer 3) or 4) are &ldquo;minor green mission&rdquo;. Those that answer 5 are not considered green SMEs.</p>
+<p>We consider SMEs that answer 1) or 2) in the survey as &ldquo;major green mission&rdquo; SMEs. Those that answer 3) or 4) are &ldquo;minor green mission&rdquo;. Those that answer 5 are not considered green SMEs.</p>
 <h2 id="plot-1-major-green-smes">Plot 1: Major green SMEs</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>legend_title <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;Environmental goals&#34;</span> <span style="color:#75715e">#rename the legend title.</span>
 </span></span><span style="display:flex;"><span>UK <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">map_data</span>(map <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;world&#34;</span>, region <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;UK&#34;</span>) <span style="color:#75715e"># load &#34;world&#34; map, and then UK</span>
