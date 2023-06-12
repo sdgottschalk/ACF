@@ -382,7 +382,7 @@ library(dplyr)</code></pre>
 <div id="load-the-data" class="section level2">
 <h2>Load the data:</h2>
 <pre class="r"><code>df1&lt;- read.csv(&quot;postcodes_lsbs_greenmission_2021.csv&quot;, sep=&quot;,&quot;, header=T)</code></pre>
-<p>The data contains the coordinates of each SME postcode and each SME
+<p>The data contains the geo coordinates of each SME's postcode and each SME's
 classification of its green aims:</p>
 <ol style="list-style-type: decimal">
 <li>Business’s main goal</li>
@@ -391,7 +391,7 @@ classification of its green aims:</p>
 <li>Secondary to financial goals</li>
 <li>Non-existent</li>
 </ol>
-<p>We consider SMEs that answer 1) or 2) in the survey as “green
+<p>We consider SMEs that answer 1) or 2) in the survey as “major green
 mission” SMEs. Those that answer 3) or 4) are “minor green mission”.
 Those that answer 5 are not considered green SMEs.</p>
 </div>
@@ -422,7 +422,7 @@ lowest density of green mission SMEs is Scotland, followed by Wales
 Scotland are located in the axis Glasgow-Edinburgh.</p>
 </div>
 <div id="load-data-for-minor-green-smes" class="section level2">
-<h2>load data for minor green SMEs</h2>
+<h2>Load data for minor green SMEs</h2>
 <pre class="r"><code>df1&lt;- read.csv(&quot;postcodes_lsbs_greenlaggards_2021.csv&quot;, sep=&quot;,&quot;, header=T)</code></pre>
 </div>
 <div id="plot-2-minor-green-missionno-green-mission" class="section level2">
